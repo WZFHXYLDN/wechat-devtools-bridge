@@ -1,0 +1,35 @@
+{
+  "name": "wechat-devtools-bridge",
+  "version": "0.1.0",
+  "description": "Open-source Codex plugin for connecting WeChat DevTools to MCP workflows.",
+  "author": {
+    "name": "Open Source Community"
+  },
+  "license": "MIT",
+  "keywords": [
+    "wechat",
+    "miniprogram",
+    "weapp",
+    "devtools",
+    "mcp",
+    "codex"
+  ],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "WeChat DevTools Bridge",
+    "shortDescription": "Connect Codex to WeChat DevTools over MCP.",
+    "longDescription": "A lightweight open-source bridge plugin that wires Codex to WeChat Mini Program tooling through an MCP server and Windows helper scripts.",
+    "developerName": "Open Source Community",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Automation"
+    ],
+    "defaultPrompt": [
+      "Connect to WeChat DevTools and inspect my mini program.",
+      "Help me preview, upload, and troubleshoot a mini program build.",
+      "Check whether my local WeChat DevTools prerequisites are ready."
+    ],
+    "brandColor": "#07C160"
+  }
+}
