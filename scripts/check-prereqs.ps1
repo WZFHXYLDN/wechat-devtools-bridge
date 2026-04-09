@@ -8,8 +8,11 @@ if (-not $cli) {
   $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
   $finder = Join-Path $scriptRoot "find-wechat-devtools.ps1"
   try {
-    $cli = & $finder
+    $cli = & $finder 2>$null
   } catch {
+    $cli = ""
+  }
+  if ($cli -isnot [string]) {
     $cli = ""
   }
 }
@@ -18,7 +21,9 @@ $report = [ordered]@{
   node = if ($node) { $node.Source } else { "" }
   npx = if ($npx) { $npx.Source } else { "" }
   wechatDevtoolsCli = $cli
+  projectPath = if ($env:WECHAT_PROJECT_PATH) { $env:WECHAT_PROJECT_PATH } else { (Resolve-Path (Join-Path $scriptRoot "..\..\..")).Path }
   wsEndpoint = if ($env:WECHAT_WS_ENDPOINT) { $env:WECHAT_WS_ENDPOINT } else { "ws://127.0.0.1:9420" }
+  mcpPackage = if ($env:WECHAT_MCP_NPX_PACKAGE) { $env:WECHAT_MCP_NPX_PACKAGE } else { "" }
 }
 
 $report | ConvertTo-Json -Depth 5

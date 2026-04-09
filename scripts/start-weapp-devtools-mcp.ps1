@@ -21,4 +21,10 @@ if (-not $env:WECHAT_PROJECT_PATH) {
   $env:WECHAT_PROJECT_PATH = (Resolve-Path (Join-Path $scriptRoot "..\..\..")).Path
 }
 
-& npx -y weapp-devtools-mcp
+if (-not $env:WECHAT_MCP_NPX_PACKAGE) {
+  Write-Error "Set WECHAT_MCP_NPX_PACKAGE to a compatible WeChat DevTools MCP package before starting the bridge."
+  exit 1
+}
+
+& npx -y $env:WECHAT_MCP_NPX_PACKAGE
+exit $LASTEXITCODE

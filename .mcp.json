@@ -12,7 +12,8 @@
       "env": {
         "WECHAT_PROJECT_PATH": ".",
         "WECHAT_DEVTOOLS_CLI": "",
-        "WECHAT_WS_ENDPOINT": "ws://127.0.0.1:9420"
+        "WECHAT_WS_ENDPOINT": "ws://127.0.0.1:9420",
+        "WECHAT_MCP_NPX_PACKAGE": ""
       }
     }
   }

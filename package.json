@@ -1,0 +1,26 @@
+{
+  "name": "wechat-devtools-bridge",
+  "version": "0.1.0",
+  "description": "Open-source Codex plugin for bridging WeChat DevTools into MCP and automation workflows.",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "wechat",
+    "weapp",
+    "miniprogram",
+    "devtools",
+    "automator",
+    "mcp"
+  ],
+  "scripts": {
+    "check": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/check-prereqs.ps1",
+    "devtools:open": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/open-project.ps1",
+    "devtools:preview": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/preview-project.ps1",
+    "devtools:upload": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/upload-project.ps1",
+    "automator:smoke": "node ./scripts/automator-smoke.cjs"
+  },
+  "dependencies": {
+    "miniprogram-automator": "^0.12.1",
+    "weapp-ide-cli": "^3.1.0"
+  }
+}
