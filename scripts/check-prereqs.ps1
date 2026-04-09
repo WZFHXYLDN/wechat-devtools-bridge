@@ -1,25 +1,27 @@
 param()
 
-$node = Get-Command node -ErrorAction SilentlyContinue
-$npx = Get-Command npx -ErrorAction SilentlyContinue
+$scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
+$findNode = Join-Path $scriptRoot "find-node-runtime.ps1"
+$findNpx = Join-Path $scriptRoot "find-npx-command.ps1"
+$finder = Join-Path $scriptRoot "find-wechat-devtools.ps1"
+
+$node = ""
+$npx = ""
 $cli = $env:WECHAT_DEVTOOLS_CLI
 
+try { $node = & $findNode 2>$null } catch { $node = "" }
+try { $npx = & $findNpx 2>$null } catch { $npx = "" }
+if ($node -isnot [string]) { $node = "" }
+if ($npx -isnot [string]) { $npx = "" }
+
 if (-not $cli) {
-  $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-  $finder = Join-Path $scriptRoot "find-wechat-devtools.ps1"
-  try {
-    $cli = & $finder 2>$null
-  } catch {
-    $cli = ""
-  }
-  if ($cli -isnot [string]) {
-    $cli = ""
-  }
+  try { $cli = & $finder 2>$null } catch { $cli = "" }
+  if ($cli -isnot [string]) { $cli = "" }
 }
 
 $report = [ordered]@{
-  node = if ($node) { $node.Source } else { "" }
-  npx = if ($npx) { $npx.Source } else { "" }
+  node = $node
+  npx = $npx
   wechatDevtoolsCli = $cli
   projectPath = if ($env:WECHAT_PROJECT_PATH) { $env:WECHAT_PROJECT_PATH } else { (Resolve-Path (Join-Path $scriptRoot "..\..\..")).Path }
   wsEndpoint = if ($env:WECHAT_WS_ENDPOINT) { $env:WECHAT_WS_ENDPOINT } else { "ws://127.0.0.1:9420" }
@@ -28,8 +30,8 @@ $report = [ordered]@{
 
 $report | ConvertTo-Json -Depth 5
 
-if (-not $node -or -not $npx) {
-  Write-Error "Node.js and npx are required."
+if (-not $node) {
+  Write-Error "A usable Node runtime was not found."
   exit 1
 }
 
