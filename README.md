@@ -24,6 +24,7 @@ That gives us a practical bridge for:
 
 - Windows PowerShell
 - Node.js 16+
+- nvm for Windows is supported
 - WeChat DevTools installed
 - WeChat DevTools service port enabled
 
@@ -97,6 +98,20 @@ npm run automator:smoke
 - `WECHAT_PROJECT_PATH`: mini program project root
 - `WECHAT_WS_ENDPOINT`: automator websocket endpoint, default `ws://127.0.0.1:9420`
 - `WECHAT_MCP_NPX_PACKAGE`: optional community MCP package name used by `start-weapp-devtools-mcp.ps1`
+- `WECHAT_NODE_EXE`: optional explicit `node.exe` override
+- `WECHAT_NPX_CMD`: optional explicit `npx.cmd` override
+
+## nvm for Windows
+
+If you use nvm for Windows, the scripts now try:
+
+1. `WECHAT_NODE_EXE` / `WECHAT_NPX_CMD`
+2. the current shell `node` / `npx`
+3. `NVM_SYMLINK\\node.exe` and `NVM_SYMLINK\\npx.cmd`
+4. `NVM_HOME\\<current-version>\\node.exe` and `npx.cmd` when `NVM_CURRENT` is set
+5. `C:\\Program Files\\nodejs\\node.exe` and `npx.cmd`
+
+If your environment still does not resolve Node correctly, run `nvm use <version>` first or set the explicit overrides above.
 
 ## MCP config
 
